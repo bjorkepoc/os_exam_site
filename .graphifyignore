@@ -1,0 +1,9 @@
+# Generated dependencies and build output
+node_modules
+dist
+coverage
+*.tsbuildinfo
+
+# Generated PDF render assets and manifest data
+public/exams
+src/data/generatedExamManifest.ts

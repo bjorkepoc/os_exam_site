@@ -1,0 +1,58 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+
+import { exams, exerciseSheets } from "../src/data/generatedExamManifest";
+
+test("generated manifest exposes all four OS exam PDFs", () => {
+  assert.deepEqual(
+    exams.map((exam) => exam.id),
+    ["2025", "2025-resit", "2024", "2024-resit"],
+  );
+});
+
+test("each exam has rendered pages and interactive controls", () => {
+  for (const exam of exams) {
+    assert.ok(exam.pages.length >= 10, `${exam.id} should include rendered PDF pages`);
+    assert.ok(
+      exam.choiceGroups.length >= 15,
+      `${exam.id} should expose MCQ radio groups`,
+    );
+    assert.ok(
+      exam.fillGroups.length >= 1,
+      `${exam.id} should expose fill or drag/drop controls`,
+    );
+  }
+});
+
+test("choice groups preserve PDF option geometry", () => {
+  const first = exams[0].choiceGroups[0];
+  assert.equal(first.optionRects.length, 4);
+  assert.ok(first.optionRects[0].x > 0);
+  assert.ok(first.optionRects[0].y > 0);
+  assert.ok(first.correctIndex >= 0);
+  assert.ok(first.correctIndex < 4);
+});
+
+test("generated manifest exposes available exercise sheets and solutions", () => {
+  assert.ok(exerciseSheets.length >= 10);
+  assert.deepEqual(
+    exerciseSheets.map((sheet) => sheet.id),
+    [
+      "exercise-1",
+      "exercise-1-handout",
+      "exercise-1-solution",
+      "exercise-2-solution",
+      "exercise-3-solution",
+      "exercise-4-solution",
+      "exercise-5-solution",
+      "exercise-6-solution",
+      "exercise-7-solution",
+      "exercise-8-solution",
+    ],
+  );
+
+  for (const sheet of exerciseSheets) {
+    assert.equal(sheet.kind, "exercise");
+    assert.ok(sheet.pages.length >= 1, `${sheet.id} should have rendered pages`);
+  }
+});
