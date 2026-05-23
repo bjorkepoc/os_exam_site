@@ -17,7 +17,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L1",
       "id": "scripts_build_exam_assets_py",
-      "community": 0
+      "community": 3
     },
     {
       "label": "ExamSource",
@@ -25,7 +25,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L26",
       "id": "build_exam_assets_examsource",
-      "community": 0
+      "community": 3
     },
     {
       "label": "DocumentSource",
@@ -33,7 +33,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L36",
       "id": "build_exam_assets_documentsource",
-      "community": 0
+      "community": 3
     },
     {
       "label": "clean()",
@@ -41,7 +41,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L42",
       "id": "build_exam_assets_clean",
-      "community": 3
+      "community": 0
     },
     {
       "label": "rect_to_dict()",
@@ -49,7 +49,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L47",
       "id": "build_exam_assets_rect_to_dict",
-      "community": 3
+      "community": 0
     },
     {
       "label": "page_content_crop()",
@@ -57,7 +57,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L56",
       "id": "build_exam_assets_page_content_crop",
-      "community": 0
+      "community": 3
     },
     {
       "label": "page_has_meaningful_content()",
@@ -65,7 +65,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L99",
       "id": "build_exam_assets_page_has_meaningful_content",
-      "community": 0
+      "community": 3
     },
     {
       "label": "shift_rect()",
@@ -73,7 +73,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L114",
       "id": "build_exam_assets_shift_rect",
-      "community": 3
+      "community": 0
     },
     {
       "label": "dedupe_rects()",
@@ -105,7 +105,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L165",
       "id": "build_exam_assets_extract_option_texts",
-      "community": 3
+      "community": 0
     },
     {
       "label": "match_answer()",
@@ -113,7 +113,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L187",
       "id": "build_exam_assets_match_answer",
-      "community": 3
+      "community": 0
     },
     {
       "label": "chunks()",
@@ -129,7 +129,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L203",
       "id": "build_exam_assets_add_aliases",
-      "community": 3
+      "community": 0
     },
     {
       "label": "build_exam()",
@@ -137,7 +137,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L466",
       "id": "build_exam_assets_build_exam",
-      "community": 3
+      "community": 0
     },
     {
       "label": "build_document_sheet()",
@@ -145,7 +145,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L587",
       "id": "build_exam_assets_build_document_sheet",
-      "community": 0
+      "community": 3
     },
     {
       "label": "main()",
@@ -153,7 +153,7 @@
       "source_file": "scripts\\build_exam_assets.py",
       "source_location": "L625",
       "id": "build_exam_assets_main",
-      "community": 0
+      "community": 3
     },
     {
       "label": "App.tsx",
@@ -332,6 +332,14 @@
       "community": 14
     },
     {
+      "label": "2025.ts",
+      "file_type": "code",
+      "source_file": "src\\data\\explanations\\2025.ts",
+      "source_location": "L1",
+      "id": "src_data_explanations_2025_ts",
+      "community": 15
+    },
+    {
       "label": "examLogic.ts",
       "file_type": "code",
       "source_file": "src\\lib\\examLogic.ts",
@@ -401,7 +409,7 @@
       "source_file": "tests\\examLogic.test.ts",
       "source_location": "L1",
       "id": "tests_examlogic_test_ts",
-      "community": 15
+      "community": 16
     },
     {
       "label": "examManifest.test.ts",
@@ -409,7 +417,7 @@
       "source_file": "tests\\examManifest.test.ts",
       "source_location": "L1",
       "id": "tests_exammanifest_test_ts",
-      "community": 16
+      "community": 17
     },
     {
       "label": "test_exam_asset_rendering.py",

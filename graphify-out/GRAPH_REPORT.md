@@ -1,11 +1,11 @@
 # Graph Report - .  (2026-05-24)
 
 ## Corpus Check
-- 15 files · ~17,314 words
+- 16 files · ~20,798 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 55 nodes · 68 edges · 17 communities detected
+- 56 nodes · 68 edges · 18 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -27,6 +27,7 @@
 - [[_COMMUNITY_Community 14|Community 14]]
 - [[_COMMUNITY_Community 15|Community 15]]
 - [[_COMMUNITY_Community 16|Community 16]]
+- [[_COMMUNITY_Community 17|Community 17]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `build_exam()` - 13 edges
@@ -42,15 +43,15 @@
 
 ## Surprising Connections (you probably didn't know these)
 - `build_exam()` --calls--> `page_content_crop()`  [EXTRACTED]
-  scripts\build_exam_assets.py → scripts\build_exam_assets.py  _Bridges community 0 → community 3_
+  scripts\build_exam_assets.py → scripts\build_exam_assets.py  _Bridges community 3 → community 0_
 - `build_exam()` --calls--> `detect_radio_rects()`  [EXTRACTED]
-  scripts\build_exam_assets.py → scripts\build_exam_assets.py  _Bridges community 6 → community 3_
+  scripts\build_exam_assets.py → scripts\build_exam_assets.py  _Bridges community 6 → community 0_
 
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.36
-Nodes (7): build_document_sheet(), chunks(), DocumentSource, ExamSource, main(), page_content_crop(), page_has_meaningful_content()
+Cohesion: 0.29
+Nodes (8): add_aliases(), build_exam(), chunks(), clean(), extract_option_texts(), match_answer(), rect_to_dict(), shift_rect()
 
 ### Community 1 - "Community 1"
 Cohesion: 0.39
@@ -61,8 +62,8 @@ Cohesion: 0.32
 Nodes (3): buildFillFeedback(), evaluateFillAnswer(), normalizeAnswer()
 
 ### Community 3 - "Community 3"
-Cohesion: 0.33
-Nodes (7): add_aliases(), build_exam(), clean(), extract_option_texts(), match_answer(), rect_to_dict(), shift_rect()
+Cohesion: 0.43
+Nodes (6): build_document_sheet(), DocumentSource, ExamSource, main(), page_content_crop(), page_has_meaningful_content()
 
 ### Community 4 - "Community 4"
 Cohesion: 0.47
@@ -116,6 +117,10 @@ Nodes (0):
 Cohesion: 1.0
 Nodes (0): 
 
+### Community 17 - "Community 17"
+Cohesion: 1.0
+Nodes (0): 
+
 ## Knowledge Gaps
 - **2 isolated node(s):** `ExamSource`, `DocumentSource`
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -135,15 +140,17 @@ Nodes (0):
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 14`** (1 nodes): `2025-resit.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 15`** (1 nodes): `examLogic.test.ts`
+- **Thin community `Community 15`** (1 nodes): `2025.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 16`** (1 nodes): `examManifest.test.ts`
+- **Thin community `Community 16`** (1 nodes): `examLogic.test.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 17`** (1 nodes): `examManifest.test.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `build_exam()` connect `Community 3` to `Community 0`, `Community 6`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+- **Why does `build_exam()` connect `Community 0` to `Community 3`, `Community 6`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
 - **What connects `ExamSource`, `DocumentSource` to the rest of the system?**
   _2 weakly-connected nodes found - possible documentation gaps or missing edges._
