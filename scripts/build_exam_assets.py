@@ -17,6 +17,9 @@ COURSE_ROOT = Path(r"C:\Users\bjork\Desktop\Operativsystemer(OS)")
 EXAM_ROOT = COURSE_ROOT / "05_Eksamen"
 PUBLIC_EXAMS = ROOT / "public" / "exams"
 OUT_MANIFEST = ROOT / "src" / "data" / "generatedExamManifest.ts"
+HEADER_RESERVED_PTS = 32
+FOOTER_RESERVED_PTS = 24
+CROP_PADDING_PTS = 14
 
 
 @dataclass(frozen=True)
@@ -52,6 +55,7 @@ def rect_to_dict(rect: fitz.Rect) -> dict[str, float]:
 
 def page_content_crop(page: fitz.Page) -> fitz.Rect:
     page_rect = page.rect
+    content_bottom = page_rect.height - FOOTER_RESERVED_PTS
     candidates: list[fitz.Rect] = []
 
     for block in page.get_text("blocks"):
@@ -59,7 +63,7 @@ def page_content_crop(page: fitz.Page) -> fitz.Rect:
         if not str(text).strip():
             continue
         rect = fitz.Rect(x0, y0, x1, y1)
-        if rect.y1 < 32 or rect.y0 > page_rect.height - 34:
+        if rect.y1 < HEADER_RESERVED_PTS or rect.y0 > content_bottom:
             continue
         candidates.append(rect)
 
@@ -74,7 +78,7 @@ def page_content_crop(page: fitz.Page) -> fitz.Rect:
         )
         if is_page_background:
             continue
-        if rect.y1 < 32 or rect.y0 > page_rect.height - 34:
+        if rect.y1 < HEADER_RESERVED_PTS or rect.y0 > content_bottom:
             continue
         candidates.append(rect)
 
@@ -85,20 +89,21 @@ def page_content_crop(page: fitz.Page) -> fitz.Rect:
     for rect in candidates[1:]:
         crop |= rect
 
-    crop.x0 = max(28, crop.x0 - 14)
-    crop.y0 = max(32, crop.y0 - 10)
-    crop.x1 = min(page_rect.width - 24, crop.x1 + 14)
-    crop.y1 = min(page_rect.height - 34, crop.y1 + 14)
+    crop.x0 = max(28, crop.x0 - CROP_PADDING_PTS)
+    crop.y0 = max(HEADER_RESERVED_PTS, crop.y0 - 10)
+    crop.x1 = min(page_rect.width - 24, crop.x1 + CROP_PADDING_PTS)
+    crop.y1 = min(content_bottom, crop.y1 + CROP_PADDING_PTS)
     return crop
 
 
 def page_has_meaningful_content(page: fitz.Page) -> bool:
+    content_bottom = page.rect.height - FOOTER_RESERVED_PTS
     for block in page.get_text("blocks"):
         x0, y0, x1, y1, text, *_ = block
         normalized = re.sub(r"\s+", " ", str(text).strip())
         if not normalized:
             continue
-        if y1 < 32 or y0 > page.rect.height - 34:
+        if y1 < HEADER_RESERVED_PTS or y0 > content_bottom:
             continue
         if normalized.startswith("Maximum marks:"):
             continue

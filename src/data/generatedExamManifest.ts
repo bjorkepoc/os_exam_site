@@ -17,7 +17,7 @@ export const exams = [
         "pageNumber": 2,
         "image": "/exams/2025/page-02.jpg",
         "width": 516.97,
-        "height": 775.92
+        "height": 785.92
       },
       {
         "pageNumber": 3,
@@ -41,13 +41,13 @@ export const exams = [
         "pageNumber": 8,
         "image": "/exams/2025/page-08.jpg",
         "width": 523.35,
-        "height": 775.92
+        "height": 785.92
       },
       {
         "pageNumber": 9,
         "image": "/exams/2025/page-09.jpg",
         "width": 511.05,
-        "height": 775.92
+        "height": 778.78
       },
       {
         "pageNumber": 10,
@@ -77,7 +77,7 @@ export const exams = [
         "pageNumber": 14,
         "image": "/exams/2025/page-14.jpg",
         "width": 513.88,
-        "height": 775.92
+        "height": 780.07
       },
       {
         "pageNumber": 15,
@@ -2000,7 +2000,7 @@ export const exams = [
         "pageNumber": 2,
         "image": "/exams/2025-resit/page-02.jpg",
         "width": 523.62,
-        "height": 775.92
+        "height": 785.92
       },
       {
         "pageNumber": 3,
@@ -2018,7 +2018,7 @@ export const exams = [
         "pageNumber": 6,
         "image": "/exams/2025-resit/page-06.jpg",
         "width": 524.02,
-        "height": 775.92
+        "height": 780.07
       },
       {
         "pageNumber": 7,
@@ -2030,7 +2030,7 @@ export const exams = [
         "pageNumber": 8,
         "image": "/exams/2025-resit/page-08.jpg",
         "width": 511.05,
-        "height": 775.92
+        "height": 778.78
       },
       {
         "pageNumber": 9,
@@ -2048,7 +2048,7 @@ export const exams = [
         "pageNumber": 11,
         "image": "/exams/2025-resit/page-11.jpg",
         "width": 517.54,
-        "height": 775.92
+        "height": 785.92
       },
       {
         "pageNumber": 12,
@@ -3992,7 +3992,7 @@ export const exams = [
         "pageNumber": 3,
         "image": "/exams/2024/page-03.jpg",
         "width": 497.27,
-        "height": 213.34
+        "height": 213.87
       },
       {
         "pageNumber": 4,
