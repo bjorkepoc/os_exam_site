@@ -5,6 +5,7 @@ import type {
   ExamSpec,
   FillGroupSpec,
 } from "../data/examTypes";
+import { getChoiceExplanation } from "../data/explanations";
 import {
   buildFillFeedback,
   evaluateFillAnswer,
@@ -23,6 +24,27 @@ function pageChoiceGroups(exam: ExamSpec, pageNumber: number): ChoiceGroupSpec[]
 
 function pageFillGroups(exam: ExamSpec, pageNumber: number): FillGroupSpec[] {
   return exam.fillGroups.filter((group) => group.pageNumber === pageNumber);
+}
+
+function correctIndexFor(group: ChoiceGroupSpec): number {
+  return getChoiceExplanation(group.id)?.correctIndex ?? group.correctIndex;
+}
+
+function optionExplanationFor(group: ChoiceGroupSpec, optionIndex: number): string {
+  const explanation = getChoiceExplanation(group.id);
+  if (explanation?.optionExplanations[optionIndex]) {
+    return explanation.optionExplanations[optionIndex];
+  }
+
+  const correctIndex = correctIndexFor(group);
+  const correctAnswer = group.optionTexts[correctIndex] ?? group.correctAnswer;
+  return optionIndex === correctIndex
+    ? `${correctAnswer} is the answer marked by the solution key.`
+    : `${group.optionTexts[optionIndex] ?? "This option"} does not match the solution-key answer, ${correctAnswer}.`;
+}
+
+function inlineSummary(value: string): string {
+  return value.length > 150 ? `${value.slice(0, 147)}...` : value;
 }
 
 function optionNoteStyle(
@@ -65,6 +87,7 @@ export default function PageCanvas({
     x: number;
     y: number;
   } | null>(null);
+  const [openExplanations, setOpenExplanations] = useState<Record<string, boolean>>({});
   const freeResponses = exam.freeResponse.filter(
     (response) => response.pageNumber === page.pageNumber,
   );
@@ -163,7 +186,7 @@ export default function PageCanvas({
             const selected = answers.choices[group.id];
             const hasAnswer = selected !== undefined;
             const isSelected = selected === optionIndex;
-            const isCorrectOption = group.correctIndex === optionIndex;
+            const isCorrectOption = correctIndexFor(group) === optionIndex;
             const statusClass = hasAnswer
               ? isCorrectOption
                 ? "is-correct"
@@ -192,18 +215,20 @@ export default function PageCanvas({
           const selected = answers.choices[group.id];
           if (selected === undefined) return [];
           return group.optionRects.map((rect, optionIndex) => {
-            const isCorrect = group.correctIndex === optionIndex;
+            const isCorrect = correctIndexFor(group) === optionIndex;
             const isSelected = selected === optionIndex;
+            const explanation = optionExplanationFor(group, optionIndex);
             const text = isCorrect
-              ? `Right: ${group.correctAnswer}`
+              ? `Right: ${inlineSummary(explanation)}`
               : isSelected
-                ? `Wrong: answer is ${group.correctAnswer}`
-                : "Wrong: not the solution";
+                ? `Wrong: ${inlineSummary(explanation)}`
+                : `Wrong: ${inlineSummary(explanation)}`;
             return (
               <div
                 key={`${group.id}-${optionIndex}-note`}
                 className={`option-note ${isCorrect ? "right" : isSelected ? "picked-wrong" : "wrong"}`}
                 style={optionNoteStyle(rect, page)}
+                title={explanation}
               >
                 {text}
               </div>
@@ -269,6 +294,76 @@ export default function PageCanvas({
             </div>
           ))}
 
+        </div>
+      )}
+
+      {choices.some((group) => answers.choices[group.id] !== undefined) && (
+        <div className="choice-explanation-list">
+          {choices
+            .filter((group) => answers.choices[group.id] !== undefined)
+            .map((group) => {
+              const selected = answers.choices[group.id];
+              const correctIndex = correctIndexFor(group);
+              const isSelectedCorrect = selected === correctIndex;
+              const explanation = getChoiceExplanation(group.id);
+              const isOpen = openExplanations[group.id] ?? false;
+              return (
+                <section key={`${group.id}-details`} className="choice-explanation-card">
+                  <div className="choice-explanation-heading">
+                    <div>
+                      <h3>Question {group.number}</h3>
+                      <p>
+                        You chose option {(selected ?? 0) + 1}. Correct answer: option{" "}
+                        {correctIndex + 1}.
+                      </p>
+                    </div>
+                    <span className={isSelectedCorrect ? "is-right" : "is-wrong"}>
+                      {isSelectedCorrect ? "Correct" : "Incorrect"}
+                    </span>
+                  </div>
+                  <button
+                    className="detail-toggle"
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() =>
+                      setOpenExplanations((current) => ({
+                        ...current,
+                        [group.id]: !isOpen,
+                      }))
+                    }
+                  >
+                    {isOpen ? "Hide detailed reasoning" : "Show detailed reasoning"}
+                  </button>
+                  {isOpen ? (
+                    <>
+                      <div className="choice-explanation-options">
+                        {group.optionRects.map((_, optionIndex) => {
+                          const isCorrect = optionIndex === correctIndex;
+                          const isSelected = optionIndex === selected;
+                          return (
+                            <div
+                              key={`${group.id}-detail-${optionIndex}`}
+                              className={`choice-explanation-option ${
+                                isCorrect ? "right" : isSelected ? "picked-wrong" : "wrong"
+                              }`}
+                            >
+                              <strong>
+                                Option {optionIndex + 1}: {isCorrect ? "Right" : "Wrong"}
+                                {isSelected ? " - your choice" : ""}
+                              </strong>
+                              <p>{optionExplanationFor(group, optionIndex)}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      {explanation?.uncertainty ? (
+                        <p className="choice-explanation-note">{explanation.uncertainty}</p>
+                      ) : null}
+                    </>
+                  ) : null}
+                </section>
+              );
+            })}
         </div>
       )}
 

@@ -37,6 +37,8 @@ class DocumentSource:
     id: str
     title: str
     pdf: Path
+    solution_sheet_id: str | None = None
+    answers_hidden_by_default: bool = False
 
 
 def clean(value: str) -> str:
@@ -439,6 +441,7 @@ EXERCISE_SHEETS = [
         id="exercise-1",
         title="Exercise 1 Answered Sheet",
         pdf=COURSE_ROOT / "02_Ovinger" / "Oppgaver" / "Exercise_1.pdf",
+        answers_hidden_by_default=True,
     ),
     DocumentSource(
         id="exercise-1-handout",
@@ -448,6 +451,7 @@ EXERCISE_SHEETS = [
         / "Oppgaver"
         / "Exercise_1_handout"
         / "exercise_1.pdf",
+        solution_sheet_id="exercise-1-solution",
     ),
     *[
         DocumentSource(
@@ -457,6 +461,7 @@ EXERCISE_SHEETS = [
             / "02_Ovinger"
             / "Losninger"
             / f"ex{number:02d}_solution.pdf",
+            answers_hidden_by_default=True,
         )
         for number in range(1, 9)
     ],
@@ -610,7 +615,7 @@ def build_document_sheet(source: DocumentSource) -> dict:
             }
         )
 
-    return {
+    sheet = {
         "id": source.id,
         "title": source.title,
         "kind": "exercise",
@@ -620,6 +625,11 @@ def build_document_sheet(source: DocumentSource) -> dict:
         "fillGroups": [],
         "freeResponse": [],
     }
+    if source.solution_sheet_id:
+        sheet["solutionSheetId"] = source.solution_sheet_id
+    if source.answers_hidden_by_default:
+        sheet["answersHiddenByDefault"] = True
+    return sheet
 
 
 def main() -> None:

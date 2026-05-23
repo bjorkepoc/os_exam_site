@@ -43,6 +43,8 @@ export interface ExamSpec {
   id: string;
   title: string;
   kind?: "exam" | "exercise";
+  solutionSheetId?: string;
+  answersHiddenByDefault?: boolean;
   sourceLabel: string;
   pages: ExamPageSpec[];
   choiceGroups: ChoiceGroupSpec[];

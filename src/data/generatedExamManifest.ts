@@ -6716,6 +6716,7 @@ export const exerciseSheets = [
     "id": "exercise-1",
     "title": "Exercise 1 Answered Sheet",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "Exercise_1.pdf",
     "pages": [
       {
@@ -6751,6 +6752,7 @@ export const exerciseSheets = [
     "id": "exercise-1-handout",
     "title": "Exercise 1 Handout",
     "kind": "exercise",
+    "solutionSheetId": "exercise-1-solution",
     "sourceLabel": "exercise_1.pdf",
     "pages": [
       {
@@ -6780,6 +6782,7 @@ export const exerciseSheets = [
     "id": "exercise-1-solution",
     "title": "Exercise 1 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex01_solution.pdf",
     "pages": [
       {
@@ -6815,6 +6818,7 @@ export const exerciseSheets = [
     "id": "exercise-2-solution",
     "title": "Exercise 2 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex02_solution.pdf",
     "pages": [
       {
@@ -6874,6 +6878,7 @@ export const exerciseSheets = [
     "id": "exercise-3-solution",
     "title": "Exercise 3 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex03_solution.pdf",
     "pages": [
       {
@@ -6915,6 +6920,7 @@ export const exerciseSheets = [
     "id": "exercise-4-solution",
     "title": "Exercise 4 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex04_solution.pdf",
     "pages": [
       {
@@ -6950,6 +6956,7 @@ export const exerciseSheets = [
     "id": "exercise-5-solution",
     "title": "Exercise 5 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex05_solution.pdf",
     "pages": [
       {
@@ -7003,6 +7010,7 @@ export const exerciseSheets = [
     "id": "exercise-6-solution",
     "title": "Exercise 6 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex06_solution.pdf",
     "pages": [
       {
@@ -7044,6 +7052,7 @@ export const exerciseSheets = [
     "id": "exercise-7-solution",
     "title": "Exercise 7 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex07_solution.pdf",
     "pages": [
       {
@@ -7091,6 +7100,7 @@ export const exerciseSheets = [
     "id": "exercise-8-solution",
     "title": "Exercise 8 Solution",
     "kind": "exercise",
+    "answersHiddenByDefault": true,
     "sourceLabel": "ex08_solution.pdf",
     "pages": [
       {

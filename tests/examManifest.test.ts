@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
+import { getChoiceExplanation } from "../src/data/explanations";
 import { exams, exerciseSheets } from "../src/data/generatedExamManifest";
 
 test("generated manifest exposes all four OS exam PDFs", () => {
@@ -54,5 +55,40 @@ test("generated manifest exposes available exercise sheets and solutions", () =>
   for (const sheet of exerciseSheets) {
     assert.equal(sheet.kind, "exercise");
     assert.ok(sheet.pages.length >= 1, `${sheet.id} should have rendered pages`);
+  }
+
+  const handout = exerciseSheets.find((sheet) => sheet.id === "exercise-1-handout");
+  assert.equal(handout?.solutionSheetId, "exercise-1-solution");
+
+  const answerOnlySheets = exerciseSheets.filter(
+    (sheet) => sheet.id === "exercise-1" || sheet.id.endsWith("-solution"),
+  );
+  assert.ok(answerOnlySheets.length >= 9);
+  for (const sheet of answerOnlySheets) {
+    assert.equal(
+      sheet.answersHiddenByDefault,
+      true,
+      `${sheet.id} should hide answers until revealed`,
+    );
+  }
+});
+
+test("detailed explanations cover every exam choice option", () => {
+  for (const exam of exams) {
+    for (const group of exam.choiceGroups) {
+      const explanation = getChoiceExplanation(group.id);
+      assert.ok(explanation, `${group.id} should have a detailed explanation`);
+      assert.ok(
+        explanation.correctIndex >= 0 && explanation.correctIndex < group.optionRects.length,
+        `${group.id} should point to a valid correct option`,
+      );
+
+      for (let optionIndex = 0; optionIndex < group.optionRects.length; optionIndex += 1) {
+        assert.ok(
+          explanation.optionExplanations[optionIndex]?.length > 20,
+          `${group.id} option ${optionIndex} should explain why it is right or wrong`,
+        );
+      }
+    }
   }
 });

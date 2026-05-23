@@ -11,6 +11,22 @@ export interface Feedback {
   body: string;
 }
 
+export interface CorrectProgressInput {
+  choices: Record<string, number>;
+  fills: Record<string, string>;
+  choiceGroups: Array<{ id: string; correctIndex: number }>;
+  fillGroups: Array<{
+    id: string;
+    slots: Array<{ accepted: string[] }>;
+  }>;
+}
+
+export interface CorrectProgressStats {
+  answered: number;
+  correct: number;
+  percent: number;
+}
+
 export function normalizeAnswer(value: string): string {
   return value
     .trim()
@@ -44,6 +60,38 @@ export function toggleChoiceSelection(
   const nextChoices = { ...choices };
   delete nextChoices[groupId];
   return nextChoices;
+}
+
+export function buildCorrectProgressStats({
+  choices,
+  fills,
+  choiceGroups,
+  fillGroups,
+}: CorrectProgressInput): CorrectProgressStats {
+  let answered = 0;
+  let correct = 0;
+
+  for (const group of choiceGroups) {
+    const selected = choices[group.id];
+    if (selected === undefined) continue;
+    answered += 1;
+    if (selected === group.correctIndex) correct += 1;
+  }
+
+  for (const group of fillGroups) {
+    group.slots.forEach((slot, index) => {
+      const value = fills[`${group.id}-slot-${index}`] ?? "";
+      if (!value.trim()) return;
+      answered += 1;
+      if (evaluateFillAnswer(value, slot.accepted)) correct += 1;
+    });
+  }
+
+  return {
+    answered,
+    correct,
+    percent: answered > 0 ? Math.round((correct / answered) * 100) : 0,
+  };
 }
 
 export function buildChoiceFeedback({
