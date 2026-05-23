@@ -19,3 +19,6 @@ Thumbs.db
 
 # TypeScript incremental cache
 *.tsbuildinfo
+
+# local graphify output
+graphify-out/
