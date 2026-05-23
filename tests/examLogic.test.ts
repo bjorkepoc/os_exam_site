@@ -5,6 +5,7 @@ import {
   buildChoiceFeedback,
   evaluateFillAnswer,
   normalizeAnswer,
+  toggleChoiceSelection,
 } from "../src/lib/examLogic";
 
 test("normalizes answers without punctuation, whitespace, or case sensitivity", () => {
@@ -33,4 +34,11 @@ test("choice feedback reports selected correctness and explains alternatives", (
   assert.match(feedback.title, /Incorrect/);
   assert.match(feedback.body, /Microkernel/);
   assert.match(feedback.body, /other option/);
+});
+
+test("clicking the selected option clears that choice", () => {
+  assert.deepEqual(toggleChoiceSelection({}, "q1", 2), { q1: 2 });
+  assert.deepEqual(toggleChoiceSelection({ q1: 2 }, "q1", 2), {});
+  assert.deepEqual(toggleChoiceSelection({ q1: 2 }, "q1", 1), { q1: 1 });
+  assert.deepEqual(toggleChoiceSelection({ q1: 2, q2: 0 }, "q1", 2), { q2: 0 });
 });

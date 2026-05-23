@@ -32,6 +32,20 @@ export function evaluateFillAnswer(value: string, accepted: string[]): boolean {
   });
 }
 
+export function toggleChoiceSelection(
+  choices: Record<string, number>,
+  groupId: string,
+  optionIndex: number,
+): Record<string, number> {
+  if (choices[groupId] !== optionIndex) {
+    return { ...choices, [groupId]: optionIndex };
+  }
+
+  const nextChoices = { ...choices };
+  delete nextChoices[groupId];
+  return nextChoices;
+}
+
 export function buildChoiceFeedback({
   selectedIndex,
   correctIndex,

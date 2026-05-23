@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ExamSpec } from "../data/examTypes";
+import { toggleChoiceSelection } from "../lib/examLogic";
 import PageCanvas from "./PageCanvas";
 
 export interface ExamAnswerState {
@@ -48,7 +49,7 @@ export default function ExamViewer({ exam }: { exam: ExamSpec }) {
   function setChoice(groupId: string, optionIndex: number) {
     setAnswers((current) => ({
       ...current,
-      choices: { ...current.choices, [groupId]: optionIndex },
+      choices: toggleChoiceSelection(current.choices, groupId, optionIndex),
     }));
   }
 
