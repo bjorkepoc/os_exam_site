@@ -12,6 +12,7 @@ const themeOptions: Array<{ id: ThemeMode; label: string }> = [
   { id: "mild", label: "Mild" },
   { id: "dark", label: "Dark" },
 ];
+const exercisePracticeSheets = exerciseSheets.filter((sheet) => sheet.id !== "exercise-1");
 
 function isThemeMode(value: string | null): value is ThemeMode {
   return value === "light" || value === "mild" || value === "dark";
@@ -27,7 +28,7 @@ export default function App() {
   const [section, setSection] = useState<Section>("exam");
   const [sheetId, setSheetId] = useState(exams[0]?.id ?? "");
   const [theme, setTheme] = useState<ThemeMode>(() => loadThemeMode());
-  const availableSheets: ExamSpec[] = section === "exam" ? exams : exerciseSheets;
+  const availableSheets: ExamSpec[] = section === "exam" ? exams : exercisePracticeSheets;
   const selectedSheet = useMemo(
     () => availableSheets.find((sheet) => sheet.id === sheetId) ?? availableSheets[0],
     [availableSheets, sheetId],
@@ -47,7 +48,7 @@ export default function App() {
 
   function handleSectionChange(nextSection: Section) {
     setSection(nextSection);
-    setSheetId((nextSection === "exam" ? exams[0] : exerciseSheets[0])?.id ?? "");
+    setSheetId((nextSection === "exam" ? exams[0] : exercisePracticeSheets[0])?.id ?? "");
   }
 
   return (

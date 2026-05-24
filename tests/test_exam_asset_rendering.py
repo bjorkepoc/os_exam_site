@@ -42,6 +42,28 @@ class ExamAssetRenderingTest(unittest.TestCase):
         self.assertGreaterEqual(crop.y1, bottom_text.y1 + 1)
         self.assertLess(crop.y1, footer_text.y0)
 
+    def test_answer_masks_keep_question_text_visible(self):
+        builder = load_asset_builder()
+        doc = fitz.open()
+        page = doc.new_page(width=595, height=842)
+
+        page.insert_text(
+            (90, 120),
+            "1. What is a process? Answer: It is a program in execution.",
+            fontsize=11,
+        )
+        page.insert_text((90, 160), "2. What is a thread?", fontsize=11)
+
+        masks, continues = builder.answer_mask_rects(page)
+        answer_marker = page.search_for("Answer:")[0]
+        first_question = page.search_for("What is a process?")[0]
+        next_question = page.search_for("2. What is a thread?")[0]
+
+        self.assertFalse(continues)
+        self.assertTrue(any(mask.intersects(answer_marker) for mask in masks))
+        self.assertFalse(any(mask.intersects(first_question) for mask in masks))
+        self.assertFalse(any(mask.intersects(next_question) for mask in masks))
+
 
 if __name__ == "__main__":
     unittest.main()

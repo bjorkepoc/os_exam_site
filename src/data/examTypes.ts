@@ -8,6 +8,7 @@ export interface RectSpec {
 export interface ExamPageSpec {
   pageNumber: number;
   image: string;
+  answerImage?: string;
   width: number;
   height: number;
 }

@@ -6716,43 +6716,46 @@ export const exerciseSheets = [
     "id": "exercise-1",
     "title": "Exercise 1 Answered Sheet",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "Exercise_1.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-1/page-01.jpg",
         "width": 497.76,
-        "height": 609.13
+        "height": 609.13,
+        "answerImage": "/exams/exercise-1/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-1/page-02.jpg",
         "width": 498.88,
-        "height": 631.65
+        "height": 631.65,
+        "answerImage": "/exams/exercise-1/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-1/page-03.jpg",
         "width": 497.68,
-        "height": 659.85
+        "height": 659.85,
+        "answerImage": "/exams/exercise-1/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-1/page-04.jpg",
         "width": 497.99,
-        "height": 490.81
+        "height": 490.81,
+        "answerImage": "/exams/exercise-1/page-04-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-1-handout",
     "title": "Exercise 1 Handout",
     "kind": "exercise",
-    "solutionSheetId": "exercise-1-solution",
     "sourceLabel": "exercise_1.pdf",
     "pages": [
       {
@@ -6776,402 +6779,453 @@ export const exerciseSheets = [
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "solutionSheetId": "exercise-1-solution"
   },
   {
     "id": "exercise-1-solution",
     "title": "Exercise 1 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex01_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-1-solution/page-01.jpg",
         "width": 326.64,
-        "height": 603.1
+        "height": 603.1,
+        "answerImage": "/exams/exercise-1-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-1-solution/page-02.jpg",
         "width": 476.08,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-1-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-1-solution/page-03.jpg",
         "width": 445.13,
-        "height": 748.56
+        "height": 748.56,
+        "answerImage": "/exams/exercise-1-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-1-solution/page-04.jpg",
         "width": 453.28,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-1-solution/page-04-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-2-solution",
     "title": "Exercise 2 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex02_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-2-solution/page-01.jpg",
         "width": 326.64,
-        "height": 603.1
+        "height": 603.1,
+        "answerImage": "/exams/exercise-2-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-2-solution/page-02.jpg",
         "width": 454.72,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-2-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-2-solution/page-03.jpg",
         "width": 441.08,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-2-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-2-solution/page-04.jpg",
         "width": 457.27,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-2-solution/page-04-answers.jpg"
       },
       {
         "pageNumber": 5,
         "image": "/exams/exercise-2-solution/page-05.jpg",
         "width": 441.08,
-        "height": 746.38
+        "height": 746.38,
+        "answerImage": "/exams/exercise-2-solution/page-05-answers.jpg"
       },
       {
         "pageNumber": 6,
         "image": "/exams/exercise-2-solution/page-06.jpg",
         "width": 441.07,
-        "height": 746.38
+        "height": 746.38,
+        "answerImage": "/exams/exercise-2-solution/page-06-answers.jpg"
       },
       {
         "pageNumber": 7,
         "image": "/exams/exercise-2-solution/page-07.jpg",
         "width": 441.09,
-        "height": 746.38
+        "height": 746.38,
+        "answerImage": "/exams/exercise-2-solution/page-07-answers.jpg"
       },
       {
         "pageNumber": 8,
         "image": "/exams/exercise-2-solution/page-08.jpg",
         "width": 428.33,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-2-solution/page-08-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-3-solution",
     "title": "Exercise 3 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex03_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-3-solution/page-01.jpg",
         "width": 326.64,
-        "height": 603.1
+        "height": 603.1,
+        "answerImage": "/exams/exercise-3-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-3-solution/page-02.jpg",
         "width": 453.25,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-3-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-3-solution/page-03.jpg",
         "width": 441.08,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-3-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-3-solution/page-04.jpg",
         "width": 491.14,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-3-solution/page-04-answers.jpg"
       },
       {
         "pageNumber": 5,
         "image": "/exams/exercise-3-solution/page-05.jpg",
         "width": 441.13,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-3-solution/page-05-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-4-solution",
     "title": "Exercise 4 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex04_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-4-solution/page-01.jpg",
         "width": 326.64,
-        "height": 623.03
+        "height": 623.03,
+        "answerImage": "/exams/exercise-4-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-4-solution/page-02.jpg",
         "width": 453.25,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-4-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-4-solution/page-03.jpg",
         "width": 441.08,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-4-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-4-solution/page-04.jpg",
         "width": 453.25,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-4-solution/page-04-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-5-solution",
     "title": "Exercise 5 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex05_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-5-solution/page-01.jpg",
         "width": 326.64,
-        "height": 623.03
+        "height": 623.03,
+        "answerImage": "/exams/exercise-5-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-5-solution/page-02.jpg",
         "width": 470.0,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-5-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-5-solution/page-03.jpg",
         "width": 470.03,
-        "height": 748.96
+        "height": 748.96,
+        "answerImage": "/exams/exercise-5-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-5-solution/page-04.jpg",
         "width": 445.09,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-5-solution/page-04-answers.jpg"
       },
       {
         "pageNumber": 5,
         "image": "/exams/exercise-5-solution/page-05.jpg",
         "width": 469.94,
-        "height": 748.96
+        "height": 748.96,
+        "answerImage": "/exams/exercise-5-solution/page-05-answers.jpg"
       },
       {
         "pageNumber": 6,
         "image": "/exams/exercise-5-solution/page-06.jpg",
         "width": 470.01,
-        "height": 748.96
+        "height": 748.96,
+        "answerImage": "/exams/exercise-5-solution/page-06-answers.jpg"
       },
       {
         "pageNumber": 7,
         "image": "/exams/exercise-5-solution/page-07.jpg",
         "width": 445.03,
-        "height": 748.96
+        "height": 748.96,
+        "answerImage": "/exams/exercise-5-solution/page-07-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-6-solution",
     "title": "Exercise 6 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex06_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-6-solution/page-01.jpg",
         "width": 326.64,
-        "height": 623.03
+        "height": 623.03,
+        "answerImage": "/exams/exercise-6-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-6-solution/page-02.jpg",
         "width": 453.25,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-6-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-6-solution/page-03.jpg",
         "width": 453.26,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-6-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-6-solution/page-04.jpg",
         "width": 445.1,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-6-solution/page-04-answers.jpg"
       },
       {
         "pageNumber": 5,
         "image": "/exams/exercise-6-solution/page-05.jpg",
         "width": 453.27,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-6-solution/page-05-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-7-solution",
     "title": "Exercise 7 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex07_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-7-solution/page-01.jpg",
         "width": 326.64,
-        "height": 623.03
+        "height": 623.03,
+        "answerImage": "/exams/exercise-7-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-7-solution/page-02.jpg",
         "width": 453.26,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-7-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-7-solution/page-03.jpg",
         "width": 453.26,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-7-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-7-solution/page-04.jpg",
         "width": 453.25,
-        "height": 751.0
+        "height": 751.0,
+        "answerImage": "/exams/exercise-7-solution/page-04-answers.jpg"
       },
       {
         "pageNumber": 5,
         "image": "/exams/exercise-7-solution/page-05.jpg",
         "width": 445.03,
-        "height": 748.96
+        "height": 748.96,
+        "answerImage": "/exams/exercise-7-solution/page-05-answers.jpg"
       },
       {
         "pageNumber": 6,
         "image": "/exams/exercise-7-solution/page-06.jpg",
         "width": 448.42,
-        "height": 748.96
+        "height": 748.96,
+        "answerImage": "/exams/exercise-7-solution/page-06-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   },
   {
     "id": "exercise-8-solution",
     "title": "Exercise 8 Solution",
     "kind": "exercise",
-    "answersHiddenByDefault": true,
     "sourceLabel": "ex08_solution.pdf",
     "pages": [
       {
         "pageNumber": 1,
         "image": "/exams/exercise-8-solution/page-01.jpg",
         "width": 326.64,
-        "height": 623.03
+        "height": 623.03,
+        "answerImage": "/exams/exercise-8-solution/page-01-answers.jpg"
       },
       {
         "pageNumber": 2,
         "image": "/exams/exercise-8-solution/page-02.jpg",
         "width": 453.24,
-        "height": 751.8
+        "height": 751.8,
+        "answerImage": "/exams/exercise-8-solution/page-02-answers.jpg"
       },
       {
         "pageNumber": 3,
         "image": "/exams/exercise-8-solution/page-03.jpg",
         "width": 445.04,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-8-solution/page-03-answers.jpg"
       },
       {
         "pageNumber": 4,
         "image": "/exams/exercise-8-solution/page-04.jpg",
         "width": 453.24,
-        "height": 750.55
+        "height": 750.55,
+        "answerImage": "/exams/exercise-8-solution/page-04-answers.jpg"
       },
       {
         "pageNumber": 5,
         "image": "/exams/exercise-8-solution/page-05.jpg",
         "width": 441.1,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-8-solution/page-05-answers.jpg"
       },
       {
         "pageNumber": 6,
         "image": "/exams/exercise-8-solution/page-06.jpg",
         "width": 453.24,
-        "height": 747.35
+        "height": 747.35,
+        "answerImage": "/exams/exercise-8-solution/page-06-answers.jpg"
       },
       {
         "pageNumber": 7,
         "image": "/exams/exercise-8-solution/page-07.jpg",
         "width": 453.27,
-        "height": 750.55
+        "height": 750.55,
+        "answerImage": "/exams/exercise-8-solution/page-07-answers.jpg"
       },
       {
         "pageNumber": 8,
         "image": "/exams/exercise-8-solution/page-08.jpg",
         "width": 453.25,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-8-solution/page-08-answers.jpg"
       },
       {
         "pageNumber": 9,
         "image": "/exams/exercise-8-solution/page-09.jpg",
         "width": 453.26,
-        "height": 750.55
+        "height": 750.55,
+        "answerImage": "/exams/exercise-8-solution/page-09-answers.jpg"
       },
       {
         "pageNumber": 10,
         "image": "/exams/exercise-8-solution/page-10.jpg",
         "width": 453.23,
-        "height": 751.0
+        "height": 751.0,
+        "answerImage": "/exams/exercise-8-solution/page-10-answers.jpg"
       },
       {
         "pageNumber": 11,
         "image": "/exams/exercise-8-solution/page-11.jpg",
         "width": 441.08,
-        "height": 748.38
+        "height": 748.38,
+        "answerImage": "/exams/exercise-8-solution/page-11-answers.jpg"
       }
     ],
     "choiceGroups": [],
     "fillGroups": [],
-    "freeResponse": []
+    "freeResponse": [],
+    "answersHiddenByDefault": true
   }
 ] satisfies ExamSpec[];

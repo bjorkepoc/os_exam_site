@@ -37,19 +37,22 @@ function StaticPdfPage({
   exam,
   page,
   toolbar,
+  variant = "question",
   className = "",
 }: {
   id?: string;
   exam: ExamSpec;
   page: ExamPageSpec;
   toolbar?: ReactNode;
+  variant?: "question" | "answer";
   className?: string;
 }) {
+  const image = variant === "answer" ? (page.answerImage ?? page.image) : page.image;
   return (
     <article id={id} className={`page-section ${className}`}>
       {toolbar}
       <div className="pdf-page" style={{ aspectRatio: `${page.width} / ${page.height}` }}>
-        <img src={page.image} alt={`${exam.title} page ${page.pageNumber}`} draggable={false} />
+        <img src={image} alt={`${exam.title} page ${page.pageNumber}`} draggable={false} />
       </div>
     </article>
   );
@@ -163,6 +166,7 @@ export default function ExamViewer({
           <StaticPdfPage
             exam={answerSheet}
             page={answerPage}
+            variant="answer"
             className="exercise-answer-page"
           />
         ) : null}
@@ -173,40 +177,25 @@ export default function ExamViewer({
   function renderHiddenAnswerPage(page: ExamPageSpec) {
     const revealKey = `${exam.id}-${page.pageNumber}`;
     const isRevealed = Boolean(revealedAnswers[revealKey]);
-    if (!isRevealed) {
-      return (
-        <article key={page.pageNumber} id={`page-${page.pageNumber}`} className="page-section">
-          <div className="exercise-hidden-page">
-            <p className="rail-kicker">{exam.sourceLabel}</p>
-            <h3>Page {page.pageNumber}</h3>
-            <p>Answers are hidden so you can try the exercise first.</p>
-            <button
-              className="exercise-reveal-button"
-              type="button"
-              onClick={() => setAnswerReveal(revealKey, true)}
-            >
-              Reveal answer page
-            </button>
-          </div>
-        </article>
-      );
-    }
-
     return (
       <StaticPdfPage
         key={page.pageNumber}
         id={`page-${page.pageNumber}`}
         exam={exam}
         page={page}
+        variant={isRevealed ? "answer" : "question"}
         toolbar={
           <div className="exercise-answer-toolbar">
-            <span>Page {page.pageNumber} answers revealed</span>
+            <span>
+              Page {page.pageNumber} {isRevealed ? "answers revealed" : "questions only"}
+            </span>
             <button
-              className="exercise-hide-button"
+              className={isRevealed ? "exercise-hide-button" : "exercise-reveal-button"}
               type="button"
-              onClick={() => setAnswerReveal(revealKey, false)}
+              aria-expanded={isRevealed}
+              onClick={() => setAnswerReveal(revealKey, !isRevealed)}
             >
-              Hide answer page
+              {isRevealed ? "Hide answers" : "Reveal answers"}
             </button>
           </div>
         }

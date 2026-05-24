@@ -20,6 +20,7 @@ OUT_MANIFEST = ROOT / "src" / "data" / "generatedExamManifest.ts"
 HEADER_RESERVED_PTS = 32
 FOOTER_RESERVED_PTS = 24
 CROP_PADDING_PTS = 14
+QUESTION_LINE_RE = re.compile(r"^(?:\d+[.)]\s|[a-zA-Z]\)\s)")
 
 
 @dataclass(frozen=True)
@@ -111,6 +112,86 @@ def page_has_meaningful_content(page: fitz.Page) -> bool:
             continue
         return True
     return False
+
+
+def page_text_lines(page: fitz.Page) -> list[tuple[fitz.Rect, str]]:
+    lines: list[tuple[fitz.Rect, str]] = []
+    for block in page.get_text("dict").get("blocks", []):
+        for line in block.get("lines", []):
+            text = "".join(span.get("text", "") for span in line.get("spans", []))
+            normalized = re.sub(r"\s+", " ", text).strip()
+            if normalized:
+                lines.append((fitz.Rect(line["bbox"]), normalized))
+    return sorted(lines, key=lambda item: (item[0].y0, item[0].x0))
+
+
+def is_question_line(rect: fitz.Rect, text: str) -> bool:
+    return rect.x0 <= 130 and bool(QUESTION_LINE_RE.match(text))
+
+
+def answer_mask_rects(
+    page: fitz.Page,
+    starts_in_answer: bool = False,
+) -> tuple[list[fitz.Rect], bool]:
+    lines = page_text_lines(page)
+    content_top = HEADER_RESERVED_PTS
+    content_bottom = page.rect.height - FOOTER_RESERVED_PTS
+    content_left = 72
+    content_right = page.rect.width - 24
+    masks: list[fitz.Rect] = []
+
+    def next_question_y(after_y: float) -> float | None:
+        for rect, text in lines:
+            if rect.y0 > after_y and is_question_line(rect, text):
+                return rect.y0
+        return None
+
+    continues_answer = False
+    if starts_in_answer:
+        stop_y = next_question_y(content_top - 1)
+        if stop_y is None:
+            masks.append(fitz.Rect(content_left, content_top, content_right, content_bottom))
+            continues_answer = True
+        elif stop_y > content_top:
+            masks.append(fitz.Rect(content_left, content_top, content_right, stop_y - 2))
+
+    for marker in sorted(page.search_for("Answer:"), key=lambda rect: (rect.y0, rect.x0)):
+        marker_mid_y = (marker.y0 + marker.y1) / 2
+        marker_line = next(
+            (rect for rect, _ in lines if rect.y0 - 1 <= marker_mid_y <= rect.y1 + 1),
+            marker,
+        )
+        stop_y = next_question_y(marker_line.y0 + 1)
+        if stop_y is None:
+            stop_y = content_bottom
+            continues_answer = True
+
+        first_line_bottom = min(marker_line.y1 + 2, stop_y)
+        if first_line_bottom > marker_line.y0:
+            masks.append(
+                fitz.Rect(
+                    max(content_left, marker.x0 - 2),
+                    marker_line.y0 - 2,
+                    content_right,
+                    first_line_bottom,
+                )
+            )
+        if stop_y > marker_line.y1 + 3:
+            masks.append(
+                fitz.Rect(
+                    content_left,
+                    marker_line.y1 + 1,
+                    content_right,
+                    stop_y - 2,
+                )
+            )
+
+    clipped_masks = []
+    for mask in masks:
+        mask &= fitz.Rect(content_left, content_top, content_right, content_bottom)
+        if mask.width > 1 and mask.height > 1:
+            clipped_masks.append(mask)
+    return clipped_masks, continues_answer
 
 
 def shift_rect(rect: fitz.Rect, crop: fitz.Rect) -> fitz.Rect:
@@ -597,6 +678,7 @@ def build_document_sheet(source: DocumentSource) -> dict:
     target_dir.mkdir(parents=True, exist_ok=True)
 
     pages = []
+    continues_answer = False
     for page_index, page in enumerate(doc):
         page_number = page_index + 1
         if not page_has_meaningful_content(page):
@@ -604,16 +686,31 @@ def build_document_sheet(source: DocumentSource) -> dict:
         crop = page_content_crop(page)
         image_name = f"page-{page_number:02d}.jpg"
         image_path = target_dir / image_name
+        page_entry = {
+            "pageNumber": page_number,
+            "image": f"/exams/{source.id}/{image_name}",
+            "width": round(crop.width, 2),
+            "height": round(crop.height, 2),
+        }
+
+        if source.answers_hidden_by_default:
+            answer_image_name = f"page-{page_number:02d}-answers.jpg"
+            answer_image_path = target_dir / answer_image_name
+            answer_pix = page.get_pixmap(
+                matrix=fitz.Matrix(1.65, 1.65),
+                alpha=False,
+                clip=crop,
+            )
+            answer_pix.save(answer_image_path, jpg_quality=88)
+            page_entry["answerImage"] = f"/exams/{source.id}/{answer_image_name}"
+
+            masks, continues_answer = answer_mask_rects(page, continues_answer)
+            for mask in masks:
+                page.draw_rect(mask, color=(1, 1, 1), fill=(1, 1, 1), overlay=True)
+
         pix = page.get_pixmap(matrix=fitz.Matrix(1.65, 1.65), alpha=False, clip=crop)
         pix.save(image_path, jpg_quality=88)
-        pages.append(
-            {
-                "pageNumber": page_number,
-                "image": f"/exams/{source.id}/{image_name}",
-                "width": round(crop.width, 2),
-                "height": round(crop.height, 2),
-            }
-        )
+        pages.append(page_entry)
 
     sheet = {
         "id": source.id,

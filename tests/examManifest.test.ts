@@ -70,6 +70,10 @@ test("generated manifest exposes available exercise sheets and solutions", () =>
       true,
       `${sheet.id} should hide answers until revealed`,
     );
+    assert.ok(
+      sheet.pages.every((page) => page.answerImage && page.answerImage !== page.image),
+      `${sheet.id} should expose separate question and answer page images`,
+    );
   }
 });
 
