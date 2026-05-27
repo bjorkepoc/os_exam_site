@@ -77,6 +77,27 @@ test("generated manifest exposes available exercise sheets and solutions", () =>
   }
 });
 
+test("2024 scheduling blanks stay aligned with the PDF", () => {
+  const exam2024 = exams.find((exam) => exam.id === "2024");
+  const fillGroup = exam2024?.fillGroups.find((group) => group.id === "2024-page-11-fills");
+  assert.ok(fillGroup, "2024 page 11 should expose scheduling blanks");
+  assert.equal(fillGroup.slots.length, 8);
+
+  const t3QueueSlot = fillGroup.slots[6];
+  const finalYesNoSlot = fillGroup.slots[7];
+  assert.deepEqual(t3QueueSlot.accepted, ["3"]);
+  assert.deepEqual(finalYesNoSlot.accepted, ["No"]);
+
+  assert.ok(
+    t3QueueSlot.rect.x > 210 && t3QueueSlot.rect.y > 320 && t3QueueSlot.rect.y < 355,
+    "T3 queue slot should be on the placeholder row, not on the final yes/no blank",
+  );
+  assert.ok(
+    finalYesNoSlot.rect.x > 150 && finalYesNoSlot.rect.y > 370,
+    "final yes/no slot should stay on the last visible answer box",
+  );
+});
+
 test("detailed explanations cover every exam choice option", () => {
   for (const exam of exams) {
     for (const group of exam.choiceGroups) {

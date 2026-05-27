@@ -5,7 +5,7 @@ import json
 import re
 import shutil
 import unicodedata
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 from pathlib import Path
 
@@ -31,6 +31,7 @@ class ExamSource:
     mcq_answers: list[str]
     fill_answers: dict[int, list[list[str]]]
     free_response: dict[int, list[tuple[str, str, str]]]
+    blank_rect_inserts: dict[int, list[tuple[int, tuple[float, float, float, float]]]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -243,6 +244,13 @@ def detect_blank_rects(page: fitz.Page) -> list[fitz.Rect]:
             continue
         filtered.append(rect)
     return filtered
+
+
+def apply_blank_rect_inserts(source: ExamSource, page_number: int, rects: list[fitz.Rect]) -> list[fitz.Rect]:
+    adjusted = list(rects)
+    for insert_index, coords in sorted(source.blank_rect_inserts.get(page_number, [])):
+        adjusted.insert(insert_index, fitz.Rect(coords))
+    return adjusted
 
 
 def extract_option_texts(page: fitz.Page, group: list[fitz.Rect], next_group_y: float | None) -> list[str]:
@@ -465,6 +473,9 @@ EXAMS = [
                 )
             ]
         },
+        blank_rect_inserts={
+            11: [(6, (274.2, 364.37, 324.0, 383.85))],
+        },
     ),
     ExamSource(
         id="2024-resit",
@@ -606,7 +617,7 @@ def build_exam(source: ExamSource) -> dict:
             question_number += 1
 
         if page_number in source.fill_answers:
-            blank_rects = detect_blank_rects(page)
+            blank_rects = apply_blank_rect_inserts(source, page_number, detect_blank_rects(page))
             answers = source.fill_answers[page_number]
             slots = []
             for slot_index, accepted in enumerate(answers):

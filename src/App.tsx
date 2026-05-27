@@ -29,6 +29,7 @@ export default function App() {
   const [sheetId, setSheetId] = useState(exams[0]?.id ?? "");
   const [theme, setTheme] = useState<ThemeMode>(() => loadThemeMode());
   const [topbarHidden, setTopbarHidden] = useState(false);
+  const [examAnswersRevealed, setExamAnswersRevealed] = useState(false);
   const availableSheets: ExamSpec[] = section === "exam" ? exams : exercisePracticeSheets;
   const selectedSheet = useMemo(
     () => availableSheets.find((sheet) => sheet.id === sheetId) ?? availableSheets[0],
@@ -47,10 +48,16 @@ export default function App() {
     window.localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
 
+  useEffect(() => {
+    setExamAnswersRevealed(false);
+  }, [selectedSheet?.id]);
+
   function handleSectionChange(nextSection: Section) {
     setSection(nextSection);
     setSheetId((nextSection === "exam" ? exams[0] : exercisePracticeSheets[0])?.id ?? "");
   }
+
+  const selectedSheetIsExam = selectedSheet?.kind === "exam";
 
   return (
     <div className="app-shell">
@@ -60,14 +67,26 @@ export default function App() {
             TDT4186
             {selectedSheet ? ` · ${selectedSheet.title}` : ""}
           </span>
-          <button
-            type="button"
-            className="topbar-show-button"
-            onClick={() => setTopbarHidden(false)}
-            aria-controls="site-topbar"
-          >
-            Show top bar
-          </button>
+          <div className="topbar-collapsed-actions">
+            {selectedSheetIsExam ? (
+              <button
+                type="button"
+                className="topbar-show-button"
+                aria-pressed={examAnswersRevealed}
+                onClick={() => setExamAnswersRevealed((current) => !current)}
+              >
+                {examAnswersRevealed ? "Hide answers" : "Reveal answers"}
+              </button>
+            ) : null}
+            <button
+              type="button"
+              className="topbar-show-button"
+              onClick={() => setTopbarHidden(false)}
+              aria-controls="site-topbar"
+            >
+              Show top bar
+            </button>
+          </div>
         </div>
       ) : (
         <header id="site-topbar" className="topbar">
@@ -133,6 +152,8 @@ export default function App() {
           key={selectedSheet.id}
           exam={selectedSheet}
           answerSheet={selectedAnswerSheet}
+          examAnswersRevealed={examAnswersRevealed}
+          onExamAnswersRevealedChange={setExamAnswersRevealed}
         />
       ) : null}
     </div>

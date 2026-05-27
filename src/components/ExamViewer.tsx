@@ -61,13 +61,16 @@ function StaticPdfPage({
 export default function ExamViewer({
   exam,
   answerSheet,
+  examAnswersRevealed,
+  onExamAnswersRevealedChange,
 }: {
   exam: ExamSpec;
   answerSheet?: ExamSpec;
+  examAnswersRevealed: boolean;
+  onExamAnswersRevealedChange: (revealed: boolean) => void;
 }) {
   const [answers, setAnswers] = useState<ExamAnswerState>(() => loadState(exam.id));
   const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>({});
-  const [examAnswersRevealed, setExamAnswersRevealed] = useState(false);
   const isExercise = exam.kind === "exercise";
   const isAnswerOnlyExercise = isAnswerHiddenExercise(exam);
   const revealableAnswerCount = isAnswerOnlyExercise
@@ -78,7 +81,6 @@ export default function ExamViewer({
   useEffect(() => {
     setAnswers(loadState(exam.id));
     setRevealedAnswers({});
-    setExamAnswersRevealed(false);
   }, [exam.id]);
 
   useEffect(() => {
@@ -125,7 +127,7 @@ export default function ExamViewer({
 
   function resetExam() {
     setAnswers(emptyState());
-    setExamAnswersRevealed(false);
+    onExamAnswersRevealedChange(false);
     window.localStorage.removeItem(storageKey(exam.id));
   }
 
@@ -253,7 +255,7 @@ export default function ExamViewer({
                 className="reset-button"
                 type="button"
                 aria-pressed={examAnswersRevealed}
-                onClick={() => setExamAnswersRevealed((current) => !current)}
+                onClick={() => onExamAnswersRevealedChange(!examAnswersRevealed)}
               >
                 {examAnswersRevealed ? "Hide answers" : "Reveal answers"}
               </button>

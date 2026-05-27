@@ -5168,9 +5168,9 @@ export const exams = [
           },
           {
             "rect": {
-              "x": 174.79,
-              "y": 379.93,
-              "width": 109.44,
+              "x": 246.2,
+              "y": 332.37,
+              "width": 49.8,
               "height": 19.48
             },
             "accepted": [
@@ -5180,10 +5180,10 @@ export const exams = [
           },
           {
             "rect": {
-              "x": 42.0,
-              "y": 366.0,
-              "width": 160.0,
-              "height": 24.0
+              "x": 174.79,
+              "y": 379.93,
+              "width": 109.44,
+              "height": 19.48
             },
             "accepted": [
               "No"
