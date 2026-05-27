@@ -6463,158 +6463,76 @@ export const exams = [
         "slots": [
           {
             "rect": {
-              "x": 42.0,
-              "y": 128.0,
-              "width": 160.0,
-              "height": 24.0
+              "x": 34.0,
+              "y": 144.0,
+              "width": 178.0,
+              "height": 21.0
             },
             "accepted": [
-              "empty = M",
-              "sem_t empty = M"
+              "empty = M; full = 0; mutex = 1",
+              "sem_t empty = M; sem_t full = 0; sem_t mutex = 1"
             ],
             "label": "Blank 1"
           },
           {
             "rect": {
-              "x": 42.0,
-              "y": 162.0,
-              "width": 160.0,
-              "height": 24.0
+              "x": 80.0,
+              "y": 255.0,
+              "width": 150.0,
+              "height": 19.0
             },
             "accepted": [
-              "full = 0",
-              "sem_t full = 0"
+              "sem wait(empty); sem wait(mutex)",
+              "sem_wait(empty); sem_wait(mutex)"
             ],
             "label": "Blank 2"
           },
           {
             "rect": {
-              "x": 42.0,
-              "y": 196.0,
-              "width": 160.0,
-              "height": 24.0
+              "x": 80.0,
+              "y": 287.0,
+              "width": 150.0,
+              "height": 19.0
             },
             "accepted": [
-              "mutex = 1",
-              "sem_t mutex = 1"
+              "sem post(mutex); sem post(full)",
+              "sem_post(mutex); sem_post(full)"
             ],
             "label": "Blank 3"
           },
           {
             "rect": {
-              "x": 42.0,
-              "y": 230.0,
-              "width": 160.0,
-              "height": 24.0
+              "x": 80.0,
+              "y": 414.0,
+              "width": 150.0,
+              "height": 19.0
             },
             "accepted": [
-              "sem wait(empty)",
-              "sem_wait(empty)"
+              "sem wait(full); sem wait(mutex)",
+              "sem_wait(full); sem_wait(mutex)"
             ],
             "label": "Blank 4"
           },
           {
             "rect": {
-              "x": 42.0,
-              "y": 264.0,
-              "width": 160.0,
-              "height": 24.0
+              "x": 80.0,
+              "y": 446.0,
+              "width": 150.0,
+              "height": 19.0
             },
             "accepted": [
-              "sem wait(mutex)",
-              "sem_wait(mutex)"
+              "sem post(mutex); sem post(empty)",
+              "sem_post(mutex); sem_post(empty)"
             ],
             "label": "Blank 5"
-          },
-          {
-            "rect": {
-              "x": 42.0,
-              "y": 298.0,
-              "width": 160.0,
-              "height": 24.0
-            },
-            "accepted": [
-              "sem post(mutex)",
-              "sem_post(mutex)"
-            ],
-            "label": "Blank 6"
-          },
-          {
-            "rect": {
-              "x": 42.0,
-              "y": 332.0,
-              "width": 160.0,
-              "height": 24.0
-            },
-            "accepted": [
-              "sem post(full)",
-              "sem_post(full)"
-            ],
-            "label": "Blank 7"
-          },
-          {
-            "rect": {
-              "x": 42.0,
-              "y": 366.0,
-              "width": 160.0,
-              "height": 24.0
-            },
-            "accepted": [
-              "sem wait(full)",
-              "sem_wait(full)"
-            ],
-            "label": "Blank 8"
-          },
-          {
-            "rect": {
-              "x": 42.0,
-              "y": 400.0,
-              "width": 160.0,
-              "height": 24.0
-            },
-            "accepted": [
-              "sem wait(mutex)",
-              "sem_wait(mutex)"
-            ],
-            "label": "Blank 9"
-          },
-          {
-            "rect": {
-              "x": 42.0,
-              "y": 434.0,
-              "width": 160.0,
-              "height": 24.0
-            },
-            "accepted": [
-              "sem post(mutex)",
-              "sem_post(mutex)"
-            ],
-            "label": "Blank 10"
-          },
-          {
-            "rect": {
-              "x": 42.0,
-              "y": 468.0,
-              "width": 160.0,
-              "height": 24.0
-            },
-            "accepted": [
-              "sem post(empty)",
-              "sem_post(empty)"
-            ],
-            "label": "Blank 11"
           }
         ],
         "chips": [
-          "sem_t empty = M",
-          "sem_t full = 0",
-          "sem_t mutex = 1",
-          "sem_wait(empty)",
-          "sem_wait(mutex)",
-          "sem_post(mutex)",
-          "sem_post(full)",
-          "sem_wait(full)",
-          "sem_post(empty)",
+          "sem_t empty = M; sem_t full = 0; sem_t mutex = 1",
+          "sem_wait(empty); sem_wait(mutex)",
+          "sem_post(mutex); sem_post(full)",
+          "sem_wait(full); sem_wait(mutex)",
+          "sem_post(mutex); sem_post(empty)",
           "fork()",
           "wait()",
           "exec()",

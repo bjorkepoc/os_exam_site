@@ -98,6 +98,38 @@ test("2024 scheduling blanks stay aligned with the PDF", () => {
   );
 });
 
+test("2024 resit concurrency blanks use the five visible underlines", () => {
+  const exam2024Resit = exams.find((exam) => exam.id === "2024-resit");
+  const fillGroup = exam2024Resit?.fillGroups.find(
+    (group) => group.id === "2024-resit-page-13-fills",
+  );
+  assert.ok(fillGroup, "2024 resit page 13 should expose concurrency blanks");
+  assert.equal(fillGroup.slots.length, 5);
+
+  const [initialization, producerBeforePut, producerAfterPut, consumerBeforeGet, consumerAfterGet] =
+    fillGroup.slots;
+  assert.ok(
+    initialization.rect.y > 130 && initialization.rect.y < 170,
+    "initialization slot should sit on the first underline below the instructions",
+  );
+  assert.ok(
+    producerBeforePut.rect.y > 245 && producerBeforePut.rect.y < 280,
+    "producer wait slot should sit on the underline before put(i)",
+  );
+  assert.ok(
+    producerAfterPut.rect.y > 280 && producerAfterPut.rect.y < 315,
+    "producer post slot should sit on the underline after put(i)",
+  );
+  assert.ok(
+    consumerBeforeGet.rect.y > 400 && consumerBeforeGet.rect.y < 440,
+    "consumer wait slot should sit on the underline before get()",
+  );
+  assert.ok(
+    consumerAfterGet.rect.y > 435 && consumerAfterGet.rect.y < 475,
+    "consumer post slot should sit on the underline after get()",
+  );
+});
+
 test("detailed explanations cover every exam choice option", () => {
   for (const exam of exams) {
     for (const group of exam.choiceGroups) {

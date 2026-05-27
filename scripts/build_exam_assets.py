@@ -505,7 +505,16 @@ EXAMS = [
             9: [["exec()"], ["wait()"], ["1"]],
             10: [["25"], ["12.25", "12.2", "12"], ["13.5"]],
             12: [["11"], ["512", "2^9"], ["2^27"], ["2^38", "256GB", "256 GB"], ["9"]],
-            13: [["sem_t empty = M", "empty = M"], ["sem_t full = 0", "full = 0"], ["sem_t mutex = 1", "mutex = 1"], ["sem_wait(empty)", "sem wait(empty)"], ["sem_wait(mutex)", "sem wait(mutex)"], ["sem_post(mutex)", "sem post(mutex)"], ["sem_post(full)", "sem post(full)"], ["sem_wait(full)", "sem wait(full)"], ["sem_wait(mutex)", "sem wait(mutex)"], ["sem_post(mutex)", "sem post(mutex)"], ["sem_post(empty)", "sem post(empty)"]],
+            13: [
+                [
+                    "sem_t empty = M; sem_t full = 0; sem_t mutex = 1",
+                    "empty = M; full = 0; mutex = 1",
+                ],
+                ["sem_wait(empty); sem_wait(mutex)", "sem wait(empty); sem wait(mutex)"],
+                ["sem_post(mutex); sem_post(full)", "sem post(mutex); sem post(full)"],
+                ["sem_wait(full); sem_wait(mutex)", "sem wait(full); sem wait(mutex)"],
+                ["sem_post(mutex); sem_post(empty)", "sem post(mutex); sem post(empty)"],
+            ],
             15: [["read"], ["write"], ["read"], ["write"]],
         },
         free_response={
@@ -522,6 +531,15 @@ EXAMS = [
                     "Explain polling, interrupts, and a hybrid method.",
                     "Polling repeatedly checks device status and wastes CPU for slow devices. Interrupts let the device signal completion but can add context-switch overhead. A hybrid method polls briefly, then switches to interrupts if the device is not ready.",
                 )
+            ],
+        },
+        blank_rect_inserts={
+            13: [
+                (0, (62.0, 176.0, 240.0, 197.0)),
+                (1, (108.0, 287.0, 258.0, 306.0)),
+                (2, (108.0, 319.0, 258.0, 338.0)),
+                (3, (108.0, 446.0, 258.0, 465.0)),
+                (4, (108.0, 478.0, 258.0, 497.0)),
             ],
         },
     ),
