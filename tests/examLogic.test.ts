@@ -4,8 +4,11 @@ import { test } from "node:test";
 import {
   buildChoiceFeedback,
   buildCorrectProgressStats,
+  blankFeedbackStatus,
+  choiceOverlayStatus,
   evaluateFillAnswer,
   normalizeAnswer,
+  shouldShowAnswerBank,
   toggleChoiceSelection,
 } from "../src/lib/examLogic";
 
@@ -79,4 +82,41 @@ test("correct progress percentage uses answered items so far", () => {
     }),
     { answered: 0, correct: 0, percent: 0 },
   );
+});
+
+test("answer reveal controls exam correctness visibility", () => {
+  assert.equal(shouldShowAnswerBank(1, false), false);
+  assert.equal(shouldShowAnswerBank(1, true), true);
+  assert.equal(shouldShowAnswerBank(0, true), false);
+
+  assert.equal(
+    choiceOverlayStatus({
+      hasAnswer: true,
+      isSelected: true,
+      isCorrectOption: false,
+      revealAnswers: false,
+    }),
+    "is-selected",
+  );
+  assert.equal(
+    choiceOverlayStatus({
+      hasAnswer: true,
+      isSelected: true,
+      isCorrectOption: false,
+      revealAnswers: true,
+    }),
+    "is-wrong",
+  );
+  assert.equal(
+    choiceOverlayStatus({
+      hasAnswer: true,
+      isSelected: false,
+      isCorrectOption: true,
+      revealAnswers: true,
+    }),
+    "is-correct",
+  );
+  assert.equal(blankFeedbackStatus(true, true, false), "");
+  assert.equal(blankFeedbackStatus(true, true, true), "is-correct");
+  assert.equal(blankFeedbackStatus(true, false, true), "is-wrong");
 });

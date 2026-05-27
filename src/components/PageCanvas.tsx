@@ -7,9 +7,12 @@ import type {
 } from "../data/examTypes";
 import { getChoiceExplanation } from "../data/explanations";
 import {
+  blankFeedbackStatus,
   buildFillFeedback,
+  choiceOverlayStatus,
   evaluateFillAnswer,
   rectStyle,
+  shouldShowAnswerBank,
 } from "../lib/examLogic";
 import type { ExamAnswerState } from "./ExamViewer";
 import FeedbackPanel from "./FeedbackPanel";
@@ -71,6 +74,7 @@ export default function PageCanvas({
   onChoice,
   onFill,
   onFreeResponse,
+  revealAnswers,
 }: {
   exam: ExamSpec;
   page: ExamPageSpec;
@@ -78,6 +82,7 @@ export default function PageCanvas({
   onChoice: (groupId: string, optionIndex: number) => void;
   onFill: (slotId: string, value: string) => void;
   onFreeResponse: (responseId: string, value: string) => void;
+  revealAnswers: boolean;
 }) {
   const choices = pageChoiceGroups(exam, page.pageNumber);
   const fillGroups = pageFillGroups(exam, page.pageNumber);
@@ -142,7 +147,7 @@ export default function PageCanvas({
 
   return (
     <article id={`page-${page.pageNumber}`} className="page-section">
-      {fillGroups.length > 0 && (
+      {shouldShowAnswerBank(fillGroups.length, revealAnswers) && (
         <div className="answer-bank answer-bank-top">
           {fillGroups.map((group) => (
             <div key={group.id}>
@@ -187,13 +192,12 @@ export default function PageCanvas({
             const hasAnswer = selected !== undefined;
             const isSelected = selected === optionIndex;
             const isCorrectOption = correctIndexFor(group) === optionIndex;
-            const statusClass = hasAnswer
-              ? isCorrectOption
-                ? "is-correct"
-                : isSelected
-                  ? "is-wrong"
-                  : "is-muted"
-              : "";
+            const statusClass = choiceOverlayStatus({
+              hasAnswer,
+              isSelected,
+              isCorrectOption,
+              revealAnswers,
+            });
 
             return (
               <button
@@ -211,7 +215,7 @@ export default function PageCanvas({
           }),
         )}
 
-        {choices.flatMap((group) => {
+        {revealAnswers && choices.flatMap((group) => {
           const selected = answers.choices[group.id];
           if (selected === undefined) return [];
           return group.optionRects.map((rect, optionIndex) => {
@@ -247,7 +251,7 @@ export default function PageCanvas({
                 key={slotId}
                 data-testid={slotId}
                 aria-label={`${group.title} ${slot.label}`}
-                className={`blank-overlay ${hasValue ? (correct ? "is-correct" : "is-wrong") : ""}`}
+                className={`blank-overlay ${blankFeedbackStatus(hasValue, correct, revealAnswers)}`}
                 style={rectStyle(slot.rect, page)}
                 value={value}
                 data-drop-slot-id={slotId}
@@ -266,7 +270,7 @@ export default function PageCanvas({
         )}
       </div>
 
-      {fillGroups.length > 0 && (
+      {revealAnswers && fillGroups.length > 0 && (
         <div className="page-feedback">
           {fillGroups.map((group) => (
             <div key={group.id} className="answer-bank">
@@ -297,7 +301,7 @@ export default function PageCanvas({
         </div>
       )}
 
-      {choices.some((group) => answers.choices[group.id] !== undefined) && (
+      {revealAnswers && choices.some((group) => answers.choices[group.id] !== undefined) && (
         <div className="choice-explanation-list">
           {choices
             .filter((group) => answers.choices[group.id] !== undefined)
@@ -386,7 +390,7 @@ export default function PageCanvas({
                 value={answers.freeResponses[response.id] ?? ""}
                 onChange={(event) => onFreeResponse(response.id, event.currentTarget.value)}
               />
-              {answers.freeResponses[response.id]?.trim() ? (
+              {revealAnswers && answers.freeResponses[response.id]?.trim() ? (
                 <FeedbackPanel title="Rubric" tone="neutral">
                   {response.solution}
                 </FeedbackPanel>

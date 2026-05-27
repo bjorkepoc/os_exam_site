@@ -149,6 +149,54 @@ textarea {
   margin-left: auto;
 }
 
+.topbar-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar-hide-button,
+.topbar-show-button {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--control-bg);
+  color: var(--ink);
+  padding: 8px 11px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.topbar-hide-button {
+  display: none;
+  flex: 0 0 auto;
+}
+
+.topbar-collapsed {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--topbar-bg);
+  padding: 8px 14px;
+  backdrop-filter: blur(14px);
+}
+
+.topbar-collapsed span {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .section-tabs,
 .theme-tabs {
   display: flex;
@@ -278,6 +326,22 @@ textarea {
   cursor: pointer;
 }
 
+.exam-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.exam-action-row .reset-button {
+  min-height: 44px;
+  padding: 9px 10px;
+}
+
+.reset-button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--control-selected);
+}
+
 .page-jump {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
@@ -360,6 +424,12 @@ textarea {
   border-color: var(--error);
   background: var(--error-bg);
   box-shadow: 0 0 0 8px rgba(180, 35, 24, 0.11);
+}
+
+.choice-overlay.is-selected span {
+  border-color: var(--accent);
+  background: rgba(35, 88, 184, 0.16);
+  box-shadow: 0 0 0 8px rgba(35, 88, 184, 0.1);
 }
 
 .choice-overlay.is-muted {
@@ -741,6 +811,13 @@ textarea {
     align-items: stretch;
     flex-direction: column;
     padding: 14px 16px;
+  }
+
+  .topbar-hide-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
   }
 
   .topbar-controls {

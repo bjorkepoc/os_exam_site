@@ -28,6 +28,7 @@ export default function App() {
   const [section, setSection] = useState<Section>("exam");
   const [sheetId, setSheetId] = useState(exams[0]?.id ?? "");
   const [theme, setTheme] = useState<ThemeMode>(() => loadThemeMode());
+  const [topbarHidden, setTopbarHidden] = useState(false);
   const availableSheets: ExamSpec[] = section === "exam" ? exams : exercisePracticeSheets;
   const selectedSheet = useMemo(
     () => availableSheets.find((sheet) => sheet.id === sheetId) ?? availableSheets[0],
@@ -53,52 +54,79 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <div>
-          <p className="course-code">TDT4186</p>
-          <h1>Operativsystemer Exam Practice</h1>
+      {topbarHidden ? (
+        <div className="topbar-collapsed" aria-label="Hidden top bar">
+          <span>
+            TDT4186
+            {selectedSheet ? ` · ${selectedSheet.title}` : ""}
+          </span>
+          <button
+            type="button"
+            className="topbar-show-button"
+            onClick={() => setTopbarHidden(false)}
+            aria-controls="site-topbar"
+          >
+            Show top bar
+          </button>
         </div>
-        <div className="topbar-controls">
-          <div className="section-tabs" role="tablist" aria-label="Practice material type">
+      ) : (
+        <header id="site-topbar" className="topbar">
+          <div className="topbar-heading">
+            <div>
+              <p className="course-code">TDT4186</p>
+              <h1>Operativsystemer Exam Practice</h1>
+            </div>
             <button
               type="button"
-              aria-selected={section === "exam"}
-              onClick={() => handleSectionChange("exam")}
+              className="topbar-hide-button"
+              onClick={() => setTopbarHidden(true)}
+              aria-controls="site-topbar"
             >
-              Exams
-            </button>
-            <button
-              type="button"
-              aria-selected={section === "exercise"}
-              onClick={() => handleSectionChange("exercise")}
-            >
-              Exercises
+              Hide
             </button>
           </div>
-          <div className="theme-tabs" role="group" aria-label="Theme">
-            {themeOptions.map((option) => (
+          <div className="topbar-controls">
+            <div className="section-tabs" role="tablist" aria-label="Practice material type">
               <button
-                key={option.id}
                 type="button"
-                aria-pressed={theme === option.id}
-                onClick={() => setTheme(option.id)}
+                aria-selected={section === "exam"}
+                onClick={() => handleSectionChange("exam")}
               >
-                {option.label}
+                Exams
               </button>
-            ))}
-          </div>
-          <label className="exam-select">
-            <span>{section === "exam" ? "Exam" : "Exercise sheet"}</span>
-            <select value={sheetId} onChange={(event) => setSheetId(event.target.value)}>
-              {availableSheets.map((sheet) => (
-                <option key={sheet.id} value={sheet.id}>
-                  {sheet.title}
-                </option>
+              <button
+                type="button"
+                aria-selected={section === "exercise"}
+                onClick={() => handleSectionChange("exercise")}
+              >
+                Exercises
+              </button>
+            </div>
+            <div className="theme-tabs" role="group" aria-label="Theme">
+              {themeOptions.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  aria-pressed={theme === option.id}
+                  onClick={() => setTheme(option.id)}
+                >
+                  {option.label}
+                </button>
               ))}
-            </select>
-          </label>
-        </div>
-      </header>
+            </div>
+            <label className="exam-select">
+              <span>{section === "exam" ? "Exam" : "Exercise sheet"}</span>
+              <select value={sheetId} onChange={(event) => setSheetId(event.target.value)}>
+                {availableSheets.map((sheet) => (
+                  <option key={sheet.id} value={sheet.id}>
+                    {sheet.title}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </header>
+      )}
 
       {selectedSheet ? (
         <ExamViewer

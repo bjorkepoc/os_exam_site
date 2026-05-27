@@ -27,6 +27,13 @@ export interface CorrectProgressStats {
   percent: number;
 }
 
+export interface ChoiceOverlayStatusInput {
+  hasAnswer: boolean;
+  isSelected: boolean;
+  isCorrectOption: boolean;
+  revealAnswers: boolean;
+}
+
 export function normalizeAnswer(value: string): string {
   return value
     .trim()
@@ -92,6 +99,34 @@ export function buildCorrectProgressStats({
     correct,
     percent: answered > 0 ? Math.round((correct / answered) * 100) : 0,
   };
+}
+
+export function shouldShowAnswerBank(
+  fillGroupCount: number,
+  revealAnswers: boolean,
+): boolean {
+  return fillGroupCount > 0 && revealAnswers;
+}
+
+export function choiceOverlayStatus({
+  hasAnswer,
+  isSelected,
+  isCorrectOption,
+  revealAnswers,
+}: ChoiceOverlayStatusInput): string {
+  if (!hasAnswer) return "";
+  if (!revealAnswers) return isSelected ? "is-selected" : "";
+  if (isCorrectOption) return "is-correct";
+  return isSelected ? "is-wrong" : "is-muted";
+}
+
+export function blankFeedbackStatus(
+  hasValue: boolean,
+  correct: boolean,
+  revealAnswers: boolean,
+): string {
+  if (!hasValue || !revealAnswers) return "";
+  return correct ? "is-correct" : "is-wrong";
 }
 
 export function buildChoiceFeedback({

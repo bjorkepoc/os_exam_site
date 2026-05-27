@@ -67,6 +67,7 @@ export default function ExamViewer({
 }) {
   const [answers, setAnswers] = useState<ExamAnswerState>(() => loadState(exam.id));
   const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>({});
+  const [examAnswersRevealed, setExamAnswersRevealed] = useState(false);
   const isExercise = exam.kind === "exercise";
   const isAnswerOnlyExercise = isAnswerHiddenExercise(exam);
   const revealableAnswerCount = isAnswerOnlyExercise
@@ -77,6 +78,7 @@ export default function ExamViewer({
   useEffect(() => {
     setAnswers(loadState(exam.id));
     setRevealedAnswers({});
+    setExamAnswersRevealed(false);
   }, [exam.id]);
 
   useEffect(() => {
@@ -123,6 +125,7 @@ export default function ExamViewer({
 
   function resetExam() {
     setAnswers(emptyState());
+    setExamAnswersRevealed(false);
     window.localStorage.removeItem(storageKey(exam.id));
   }
 
@@ -217,7 +220,7 @@ export default function ExamViewer({
             {!isExercise && (
               <div>
                 <dt>Correct</dt>
-                <dd>{stats.correctProgress.percent}%</dd>
+                <dd>{examAnswersRevealed ? `${stats.correctProgress.percent}%` : "Hidden"}</dd>
               </div>
             )}
             {!isExercise && (
@@ -242,9 +245,19 @@ export default function ExamViewer({
             )}
           </dl>
           {!isExercise && (
-            <button className="reset-button" type="button" onClick={resetExam}>
-              Reset exam
-            </button>
+            <div className="exam-action-row">
+              <button className="reset-button" type="button" onClick={resetExam}>
+                Reset exam
+              </button>
+              <button
+                className="reset-button"
+                type="button"
+                aria-pressed={examAnswersRevealed}
+                onClick={() => setExamAnswersRevealed((current) => !current)}
+              >
+                {examAnswersRevealed ? "Hide answers" : "Reveal answers"}
+              </button>
+            </div>
           )}
           {isExercise && revealableAnswerCount > 0 && revealedAnswerCount > 0 && (
             <button className="reset-button" type="button" onClick={hideAllAnswers}>
@@ -274,6 +287,7 @@ export default function ExamViewer({
                 onChoice={setChoice}
                 onFill={setFill}
                 onFreeResponse={setFreeResponse}
+                revealAnswers={examAnswersRevealed}
               />
               {renderAnswerRevealPanel(answerPageFor(pageIndex), page.pageNumber)}
             </div>
